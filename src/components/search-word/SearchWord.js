@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+
 import fetchWord from '../../helpers/api'
 
 import Definitions from '../definitions/Definition'
@@ -7,7 +8,7 @@ import Input from '../input/Input'
 import './SearchWord.css'
 
 export default function SearchWord() {
-  const [formInput, setFormInput] = useState('')
+  const [wordToSearchFor, setWordToSearchFor] = useState('')
   const [entries, setEntries] = useState(null)
 
   useEffect(() => {
@@ -16,17 +17,16 @@ export default function SearchWord() {
       setEntries(response.entries)
     }
 
-    formInput ? updateEntries(formInput) : setEntries(null)
-  }, [formInput])
+    wordToSearchFor ? updateEntries(wordToSearchFor) : setEntries(null)
+  }, [wordToSearchFor])
 
-  const handleInputChange = useCallback((event) => {
-    event.preventDefault()
-    setFormInput(event.target.value)
+  const onFinishTyping = useCallback((inputValue) => {
+    setWordToSearchFor(inputValue)
   }, [])
 
   return (
     <div className="container">
-      <Input inputValue={formInput} onInputChange={handleInputChange}/>
+      <Input onFinishTyping={onFinishTyping} />
       <Definitions entries={entries} />
     </div>
   )

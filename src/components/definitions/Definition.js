@@ -106,6 +106,7 @@ export default function Definitions({ entries }) {
 
   const SelectedEntry = selectedEntry ? renderSelectedEntry() : null
 
+  // Simulate a slow render
   sleep(30)
 
   return (
